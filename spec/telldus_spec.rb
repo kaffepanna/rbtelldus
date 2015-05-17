@@ -10,33 +10,50 @@ describe Device do
 
 	describe '#on' do
 		subject(:device) { Device.get_device(id).on }
-		
+
 		context 'when device support turning on' do
 			let!(:id) { 1 }
 
-			it "Returns true" do
-				is_expected.to be_true
-			end
-			
-			it "Turns on light" do
-				expect(switch_state.on).to eq(true)
-			end
+			it { is_expected.to be_true }
+			it { expect(switch_state.on).to eq(true) }
 		end
 
 		context 'when device does not support on' do
-			it "should return false"
+      let!(:id) { 1 }
+      before {switch_state.supported_methods = 0 }
+			it { is_expected_to raise_error(NotSupportedException) }
 		end
 	end
 
+  describe '#off' do
+    context 'when device support turning off' do
+			let!(:id) { 1 }
+
+			it { is_expected.to be_true }
+			it { expect(switch_state.off).to eq(true) }
+		end
+
+		context 'when device does not support off' do
+      let!(:id) { 1 }
+      before {switch_state.supported_methods = 0 }
+			it { is_expected_to raise_error(NotSupportedException) }
+		end
+
+	end
+
 	describe '.get_device' do
-		subject(:device) { Device.get_device(id) }
-		let!(:id) { 1 }
+    subject(:device) { Device.get_device(id) }
 
 		context "when device is configured" do
-			it "Should return a device" do
-				is_expected.to be_kind_of(Device)
-			end
+		  let!(:id) { 1 }
+
+			it { is_expected.to be_kind_of(Device) }
 		end
+
+    context "when device i not configured" do
+      let!(:id) { 2 }
+      it { is_expected_to raise_error(DeviceNotFoundException) }
+    end
 	end
 end
 
