@@ -20,6 +20,6 @@ task :telldus_build do
 end
 
 task :test => [:telldus_test_build] do
-  sh "rspec -f doc"
+  sh "rspec -f d"
 end
 

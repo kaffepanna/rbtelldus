@@ -20,7 +20,14 @@ bool  tdSetName(int intDeviceId, const char* chNewName);
 char * tdLastSentValue( int intDeviceId );
 char * tdGetProtocol(int intDeviceId);
 bool  tdSetProtocol(int intDeviceId, const char* strProtocol);
+int  tdGetDeviceType(int intDeviceId);
 
+int  tdAddDevice();
+bool  tdRemoveDevice(int intDeviceId);
+char *  tdGetModel(int intDeviceId);
+bool  tdSetModel(int intDeviceId, const char *intModel);
+char *  tdGetDeviceParameter(int intDeviceId, const char *strName, const char *defaultValue);
+bool  tdSetDeviceParameter(int intDeviceId, const char *strName, const char* strValue);
 /*
 int  tdBell(int intDeviceId);
 int  tdExecute(int intDeviceId);
@@ -28,18 +35,12 @@ int  tdUp(int intDeviceId);
 int  tdDown(int intDeviceId);
 int  tdStop(int intDeviceId);
 
-int  tdGetDeviceType(int intDeviceId);
 
 char * tdGetErrorString(int intErrorNo);
 
-char *  tdGetModel(int intDeviceId);
-bool  tdSetModel(int intDeviceId, const char *intModel);
 
-char *  tdGetDeviceParameter(int intDeviceId, const char *strName, const char *defaultValue);
-bool  tdSetDeviceParameter(int intDeviceId, const char *strName, const char* strValue);
 
-int  tdAddDevice();
-bool  tdRemoveDevice(int intDeviceId);
+
 
 int  tdSendRawCommand(const char *command, int reserved);
 
