@@ -2,3 +2,5 @@
 *.lock
 *.so
 *.o
+pkg/*
+tmp/*

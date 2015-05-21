@@ -5,12 +5,15 @@ rvm:
 - '2.2'
 script: bundle exec rake test
 
-before_deploy: bundle exec rake build
+before_deploy:
+  - bundle exec rake build
+  - export RPM_FILE="pkg/$(ls -1 *.gem)"
 deploy:
   provider: releases
   api_key:
     secure: jSaaNShiVf96bnJw+bHICxx+DBy5c5P8O/QYlFHgEltJPRQX1WlbFmipduwuVjyiOTnnBeSghRsujVef5Ld9ZeKMSB7jOgDpfPAqEBIxsWYf8SgxSHuwhGjAtsBn8WGbEcE1GQd4H4hsoEEi43ObkFgzuVv7lSSU9TyxX+5Rcf4or5doYWlQzsQxEfd2Lp5ATHDhxkafnpcCLSIsYyc5q8nBjnavelHPewC2gLzBkQYVE1HQxuABSb7jOMYKq0AGjOiKFmDck7cb8+eZwi4RjwjOStfdHm0rKM98/ZIdXJ0VgnaEny2q1J1shc2VqTPEC0ssZpE5kmFAHcFP74voj0ww7i3qH6BNJfJr4Sf4S3UPtAATRVavJbMjQvGjHs68Mb13RNbCQbdSSDg+88UhVTAowuwhAb3nPu5/IGuD4B1hGhSqmfdVBjhdWotqQIlEteaBIC+/IheSH+4f7CPhCIyb+GapVr81H1Hz+RlD9KMmExG7SffLeGSUtGHplAawBnGt9fCF7FTvN9ZfJdIW60ld669EFNlAmmaahyoaBgBn32XTx/UJc5ntweloAIQruuMrBP7zOvQJLJVMtrnJI65t47Zm6hq9e2yXt+Hl9MzslzELhPmE8J9/JrtlvzAg5dC9PxRMGfILCuf+hjMO+5Ag1Vb6h+VcixnjIm+lgFI=
-  file: pkg/rtelldus-*.gem
+  file: "${RPM_FILE}"
+  file_glob: true
   on:
     tags: true
     #    repo: kaffepanna/rtelldus
