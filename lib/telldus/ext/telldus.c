@@ -37,7 +37,10 @@ static VALUE telldus_get_name(VALUE self, VALUE id)
 	VALUE rname;
 	char *name;
 	name = tdGetName(FIX2INT(id));
-	rname = rb_str_new_cstr(name);
+	if (!name)
+		rname = rb_str_new_cstr("");
+	else
+		rname = rb_str_new_cstr(name);
 	tdReleaseString(name);
 	return rname;
 }

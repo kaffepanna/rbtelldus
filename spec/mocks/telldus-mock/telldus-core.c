@@ -129,7 +129,7 @@ char *tdGetName(int intDeviceId) {
 
 	sw = GET_SWITCH(intDeviceId);
 	if(!RTEST(sw)) {
-		return "";
+		return 0;
 	}
 
 	name = rb_funcall(sw, rb_intern("name"), 0);
@@ -171,8 +171,11 @@ char * tdGetProtocol(int intDeviceId) {
 	return StringValueCStr(protocol);
 }
 bool  tdSetProtocol(int intDeviceId, const char* strProtocol) {
-	VALUE sw = GET_SWITCH(intDeviceId);
-	VALUE protocol = rb_str_new_cstr(strProtocol);
+	VALUE sw;
+	VALUE protocol;
+
+	sw = GET_SWITCH(intDeviceId);
+	protocol = rb_str_new_cstr(strProtocol);
 	rb_funcall(sw, rb_intern("protocol="), 1, protocol);
 	return 1;
 }
@@ -221,7 +224,7 @@ char *  tdGetModel(int intDeviceId) {
 
 	sw = GET_SWITCH(intDeviceId);
 	if (!RTEST(sw))
-		return "";
+		return 0;
 	model = rb_funcall(sw, rb_intern("model"),0);
 	return StringValueCStr(model);
 }
@@ -241,7 +244,7 @@ char *  tdGetDeviceParameter(int intDeviceId, const char *strName, const char *d
 
 	sw = GET_SWITCH(intDeviceId);
 	if (!RTEST(sw))
-		return "";
+		return 0;
 
 	params = rb_funcall(sw, rb_intern("params"),0);
 	param = rb_hash_aref(params, rb_str_new_cstr(strName));
