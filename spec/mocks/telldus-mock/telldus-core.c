@@ -76,12 +76,14 @@ int  tdDim(int intDeviceId, unsigned char level) {
 
 int  tdLastSentCommand( int intDeviceId, int methodsSupported ) {
 	VALUE sw;
+	VALUE lastcmd;
+
 	sw = GET_SWITCH(intDeviceId);
 	if(!RTEST(sw)) {
 		return 0;
 	}
 
-	VALUE lastcmd = rb_funcall(sw, rb_intern("last_command"), 0);
+	lastcmd = rb_funcall(sw, rb_intern("last_command"), 0);
 	if(FIX2INT(lastcmd) & methodsSupported) {
 		return FIX2INT(lastcmd);
 	}
@@ -89,59 +91,83 @@ int  tdLastSentCommand( int intDeviceId, int methodsSupported ) {
 
 }
 int  tdMethods(int id, int methodsSupported){
-	VALUE sw = GET_SWITCH(id);
+	VALUE sw; 
+	VALUE methods;
 
-	VALUE methods = rb_funcall(sw, rb_intern("supported_methods"), 0);
+	sw = GET_SWITCH(id);
+	methods = rb_funcall(sw, rb_intern("supported_methods"), 0);
 	return methods & FIX2INT(methods);
 }
 
 int  tdGetNumberOfDevices() {
-	VALUE nitems = rb_funcall(telldusState, rb_intern("size"),0);
+	VALUE nitems;
+
+	nitems = rb_funcall(telldusState, rb_intern("size"),0);
 	return FIX2INT(nitems);
 }
 
 
 int  tdGetDeviceId(int intDeviceIndex) {
-	VALUE arr = rb_funcall(telldusState, rb_intern("to_a"), 0);
-	VALUE dev = rb_ary_entry(arr, intDeviceIndex);
+	VALUE arr;
+	VALUE dev;
+	VALUE id;
 
+	arr = rb_funcall(telldusState, rb_intern("to_a"), 0);
+	dev = rb_ary_entry(arr, intDeviceIndex); 
 	if (!RTEST(dev)) {
 		return TELLSTICK_ERROR_NOT_FOUND;
 	}
-	VALUE id = rb_funcall(dev, rb_intern("first"), 0);
+
+	id = rb_funcall(dev, rb_intern("first"), 0);
 
 	return FIX2INT(id);
 }
 
 char *tdGetName(int intDeviceId) {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+	VALUE name;
+
+	sw = GET_SWITCH(intDeviceId);
 	if(!RTEST(sw)) {
 		return "";
 	}
-	VALUE name = rb_funcall(sw, rb_intern("name"), 0);
+
+	name = rb_funcall(sw, rb_intern("name"), 0);
 	return StringValueCStr(name);
 }
 
 bool  tdSetName(int intDeviceId, const char* chNewName) {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+	VALUE name;
+
+	sw = GET_SWITCH(intDeviceId);
 	if(!RTEST(sw))
 		return 0;
-	VALUE name = rb_str_new_cstr(chNewName);
+
+	name = rb_str_new_cstr(chNewName);
 	rb_funcall(sw, rb_intern("name="), 1, name);
 	return 1;
 }
 
 char * tdLastSentValue( int intDeviceId )
 {
-	VALUE sw = GET_SWITCH(intDeviceId);
-	VALUE dim = rb_funcall(sw, rb_intern("dim"), 0);
-	VALUE str = rb_funcall(dim, rb_intern("to_s"),0);
+	VALUE sw;
+	VALUE dim;
+	VALUE str;
+
+	sw = GET_SWITCH(intDeviceId);
+	dim = rb_funcall(sw, rb_intern("dim"), 0);
+	str = rb_funcall(dim, rb_intern("to_s"),0);
+
 	return StringValueCStr(str);
 }
 
 char * tdGetProtocol(int intDeviceId) {
-	VALUE sw = GET_SWITCH(intDeviceId);
-	VALUE protocol = rb_funcall(sw, rb_intern("protocol"), 0);
+	VALUE sw;
+	VALUE protocol;
+
+	sw = GET_SWITCH(intDeviceId);
+	protocol = rb_funcall(sw, rb_intern("protocol"), 0);
 	return StringValueCStr(protocol);
 }
 bool  tdSetProtocol(int intDeviceId, const char* strProtocol) {
@@ -152,24 +178,36 @@ bool  tdSetProtocol(int intDeviceId, const char* strProtocol) {
 }
 
 int tdGetDeviceType(int intDeviceId) {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+	VALUE type;
+
+	sw = GET_SWITCH(intDeviceId);
+
 	if (!RTEST(sw)) {
 		return TELLSTICK_ERROR_NOT_FOUND;
 	}
-	VALUE type = rb_funcall(sw, rb_intern("device_type"), 0);
+
+	type = rb_funcall(sw, rb_intern("device_type"), 0);
 	return FIX2INT(type);
 }
 
 int  tdAddDevice()
 {
-	VALUE sw = rb_class_new_instance(0, 0, rb_cTelldusSwitchState);
-	VALUE id = rb_funcall(sw, rb_intern("id"), 0);
+	VALUE sw;
+	VALUE id;
+
+	sw = rb_class_new_instance(0, 0, rb_cTelldusSwitchState);
+	id = rb_funcall(sw, rb_intern("id"), 0); 
 	return FIX2INT(id);
 }
 
 bool  tdRemoveDevice(int intDeviceId)
 {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+
+	sw = GET_SWITCH(intDeviceId);
+
+
 	if (!RTEST(sw))
 		return 0;
 
@@ -178,9 +216,10 @@ bool  tdRemoveDevice(int intDeviceId)
 }
 
 char *  tdGetModel(int intDeviceId) {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
 	VALUE model;
 
+	sw = GET_SWITCH(intDeviceId);
 	if (!RTEST(sw))
 		return "";
 	model = rb_funcall(sw, rb_intern("model"),0);
@@ -188,40 +227,57 @@ char *  tdGetModel(int intDeviceId) {
 }
 
 bool  tdSetModel(int intDeviceId, const char *intModel) {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+	sw = GET_SWITCH(intDeviceId);
 	if (!RTEST(sw))
 		return 0;
 	rb_funcall(sw, rb_intern("model="), 1, rb_str_new_cstr(intModel));
 	return 1;
 }
 char *  tdGetDeviceParameter(int intDeviceId, const char *strName, const char *defaultValue) {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+	VALUE params;
+	VALUE param;
+
+	sw = GET_SWITCH(intDeviceId);
 	if (!RTEST(sw))
 		return "";
-	VALUE params = rb_funcall(sw, rb_intern("params"),0);
-	VALUE param = rb_hash_aref(params, rb_str_new_cstr(strName));
+
+	params = rb_funcall(sw, rb_intern("params"),0);
+	param = rb_hash_aref(params, rb_str_new_cstr(strName));
+
 	if (!RTEST(param))
 		return (char*)defaultValue;
 	return StringValueCStr(param);
 }
 bool  tdSetDeviceParameter(int intDeviceId, const char *strName, const char* strValue)
 {
-	VALUE sw = GET_SWITCH(intDeviceId);
+	VALUE sw;
+	VALUE params;
+
+	sw = GET_SWITCH(intDeviceId);
+
 	if (!RTEST(sw))
 		return 0;
-	VALUE params = rb_funcall(sw, rb_intern("params"),0);
+
+	params = rb_funcall(sw, rb_intern("params"),0);
 	rb_hash_aset(params, rb_str_new_cstr(strName), rb_str_new_cstr(strValue));
 	return 1;
 }
 
 static VALUE telldus_switch_state_initialize(int argc, VALUE* argv, VALUE self)
 {
+	VALUE args;
+	VALUE next_id;
+	VALUE default_args;
+
 	int supported_methods = (TELLSTICK_TURNON
 					| TELLSTICK_TURNOFF
 					| TELLSTICK_DIM
 					| TELLSTICK_LEARN) ;
-	VALUE default_args = rb_hash_new();
-	VALUE next_id = rb_eval_string("(TelldusState.keys.sort.last || 0) + 1");
+	default_args = rb_hash_new();
+	next_id = rb_eval_string("(TelldusState.keys.sort.last || 0) + 1");
+
 	rb_hash_aset(default_args, STR2SYM("id"), next_id);
 	rb_hash_aset(default_args, STR2SYM("on"), Qfalse);
 	rb_hash_aset(default_args, STR2SYM("dim"), INT2FIX(0));
@@ -234,7 +290,6 @@ static VALUE telldus_switch_state_initialize(int argc, VALUE* argv, VALUE self)
 	rb_hash_aset(default_args, STR2SYM("supported_methods"), INT2FIX(supported_methods));
 	rb_hash_aset(default_args, STR2SYM("params"), rb_hash_new());
 
-	VALUE args;
 	rb_scan_args(argc, argv, ":", &args);
 	if (!RTEST(args)) {
 		args = rb_hash_new();
@@ -258,7 +313,6 @@ static VALUE telldus_switch_state_initialize(int argc, VALUE* argv, VALUE self)
 
 void Init_telldus_state(void)
 {
-	VALUE instance;
 	rb_cTelldusSwitchState = rb_define_class("TelldusSwitchState", rb_cObject);
 	rb_define_method(rb_cTelldusSwitchState, "initialize", telldus_switch_state_initialize, -1);
 	rb_define_attr(rb_cTelldusSwitchState, "id", 1,0);
