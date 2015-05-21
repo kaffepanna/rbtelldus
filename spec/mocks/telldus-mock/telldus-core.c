@@ -19,7 +19,6 @@ static VALUE telldusState;
 
 static int supportMethod(VALUE sw, int method)
 {
-	int supportedMethods;
 	return FIX2INT(rb_funcall(sw, rb_intern("supported_methods"), 0)) & method;
 }
 

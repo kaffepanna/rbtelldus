@@ -1,8 +1,6 @@
 #include <ruby.h>
 #include <telldus-core.h>
 static VALUE rb_mTelldus;
-static VALUE rb_cDevice;
-
 
 static VALUE telldus_on(VALUE self, VALUE id)
 {
@@ -120,7 +118,7 @@ static VALUE telldus_set_model(VALUE self, VALUE id, VALUE name)
 	return Qfalse;
 }
 
-Init_telldus(void)
+void Init_telldus(void)
 {
 	rb_mTelldus = rb_define_module("Telldus");
 	rb_define_singleton_method(rb_mTelldus, "on", telldus_on, 1);
