@@ -24,5 +24,9 @@ Gem::Specification.new do |spec|
   spec.extensions = ["lib/telldus/ext/extconf.rb"]
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rack-test"
   spec.add_development_dependency 'rake-compiler', '~> 0.8.3'
+
+  spec.add_runtime_dependency 'sinatra'
 end
