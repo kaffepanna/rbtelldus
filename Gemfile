@@ -1,5 +1,4 @@
-source 'http://rubygems.org'
-gem 'rspec'
-gem 'sinatra'
-gem 'rake'
-gem 'rack-test'
+source 'https://rubygems.org'
+
+# Specify your gem's dependencies in RTelldus.gemspec
+gemspec
