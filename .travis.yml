@@ -10,7 +10,7 @@ before_deploy:
 deploy:
   provider: rubygems
   api_key: $RUBYGEMS_KEY
-  gem: rtelldus
+  gem: rbtelldus
   on:
     tags: true
     repo: kaffepanna/rtelldus
