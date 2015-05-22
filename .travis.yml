@@ -9,8 +9,7 @@ before_deploy:
 - export GEM_FILE="$(ls -1 pkg/*.gem | tail -n1)"
 deploy:
   provider: rubygems
-  api_key:
-    secure: y0KZxJH1mYT7ZEK7BZ8JCZffJgWRN3Ld2lScXJ/wm4wfE9z/+7SvRhKwr4GwT3AK7wSXeu/uu+wErrd8Lxvo35mb+aYJPgAP8dT3R+QpBMtUX81Od5Ts3FVmTIjS/0SCCvrzOuSNeRKz6kL7c4zWL7/7VOP0aBGg/YKKVtlmOH4nNV5zn0X6RotYBzUc5I9nYZblHLNyzqXSpGciQmOVd9Sv0bCBXE6O9gd1VOcublOJHkFY9hKyRZnj2cbSs+/VsMrhwNjDORn6Tp1rWX3W7knFPG8BOrXzpMMzR9FfSzWyajkxtLuhVh4+wJBNWtM2T6bOrO+HxRX0Pr69FFVQqY6OHbGRQL11+1u3xbHcWl5xe5pqhe+68QNv+pXgudeKyDgl4hCGGrRGIbSU3rTB1EnvWnCngWjttj70w/YHKrV3izTLzvVmdFKXhZQUBmNfvpqWDHuQaREbAPXFcSuZ2HDjZgSGPNwwnzOHEmBxsAwYQG5IbrymiWvPg0/qh8HOmDsWdB7exID7zfy1fTj9VMiKWu6auBu2zRMtn6zzgx79MxtnGuYZrNbl26/T8B/qPuJ3iDUVc2YIFhRaaw3riB77JuHR2yxCM21LQgalwxMru4b/EUMx/7K3qDqTc/h5eJ6PpvorXSWCcBMg40wfrVHZ3CcRVKI31Gvj2XgKzJ8=
+  api_key: $RUBYGEMS_KEY
   gem: rtelldus
   on:
     tags: true
