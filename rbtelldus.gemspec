@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "rbtelldus"
-  spec.version       = `git tag | tail -1`
+  spec.version       = `git describe --abbrev=0 --tags`
   spec.authors       = ["Patrik Pettersson"]
   spec.email         = ["pettersson.pa@gmail.com"]
 
