@@ -1,5 +1,8 @@
+
+puts "Load path #{$:}"
 require_relative './mocks/telldus-mock/lib/telldus_state'
-require_relative '../lib/telldus/telldus'
+require 'rbtelldus'
+
 
 shared_examples 'a controll function' do |args|
   method =  args[:method]

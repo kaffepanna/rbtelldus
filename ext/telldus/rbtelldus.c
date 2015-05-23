@@ -118,7 +118,7 @@ static VALUE telldus_set_model(VALUE self, VALUE id, VALUE name)
 	return Qfalse;
 }
 
-void Init_telldus(void)
+void Init_rbtelldus(void)
 {
 	rb_mTelldus = rb_define_module("Telldus");
 	rb_define_singleton_method(rb_mTelldus, "on", telldus_on, 1);

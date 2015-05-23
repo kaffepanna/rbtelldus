@@ -2,7 +2,7 @@
 require 'mkmf'
 
 # Give it a name
-extension_name = 'telldus'
+extension_name = 'rbtelldus/rbtelldus'
 
 dir_config("telldus")
 
