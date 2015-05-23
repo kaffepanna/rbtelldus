@@ -1,5 +1,3 @@
-
-puts "Load path #{$:}"
 require_relative './mocks/telldus-mock/lib/telldus_state'
 require 'rbtelldus'
 
