@@ -180,5 +180,14 @@ describe Telldus do
     
     it { expect(subject).to eq(model) }
   end
+
+  describe '.getIds' do
+    subject { Telldus.getIds }
+    let!(:state1) { TelldusSwitchState.new }
+    let!(:state2) { TelldusSwitchState.new }
+    let!(:state3) { TelldusSwitchState.new }
+    it { expect(subject).to eq([1, 2, 3]) }
+  end
+
 end
 

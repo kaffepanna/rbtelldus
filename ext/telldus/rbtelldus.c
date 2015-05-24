@@ -118,6 +118,20 @@ static VALUE telldus_set_model(VALUE self, VALUE id, VALUE name)
 	return Qfalse;
 }
 
+static VALUE telldus_get_ids(VALUE self)
+{
+	int len,i, id;
+	VALUE ids;
+
+	ids = rb_ary_new();
+	len = tdGetNumberOfDevices();
+	for (i=0; i < len; i++) {
+		id = tdGetDeviceId(i);
+		rb_ary_push(ids, INT2FIX(id));
+	}
+	return ids;
+}
+
 void Init_rbtelldus(void)
 {
 	rb_mTelldus = rb_define_module("Telldus");
@@ -138,6 +152,8 @@ void Init_rbtelldus(void)
 
 	rb_define_singleton_method(rb_mTelldus, "getModel", telldus_get_model, 1);
 	rb_define_singleton_method(rb_mTelldus, "setModel", telldus_set_model, 2);
+
+	rb_define_singleton_method(rb_mTelldus, "getIds", telldus_get_ids, 0);
 
 	rb_define_const(rb_mTelldus, "SUCCESS", INT2FIX(TELLSTICK_SUCCESS));
 	rb_define_const(rb_mTelldus, "NOT_FOUND", INT2FIX(TELLSTICK_ERROR_NOT_FOUND));
