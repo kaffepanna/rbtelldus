@@ -22,7 +22,7 @@ namespace :compile do
 
   desc 'build rtelldus for testing'
   task 'telldus:test' => 'telldus_core' do
-    Dir.chdir('ext/telldus') do
+    Dir.chdir('ext/rbtelldus') do
       run "ruby extconf.rb --with-telldus-dir=../../spec/mocks/telldus-mock"
       run "make"
     end
@@ -30,7 +30,7 @@ namespace :compile do
 
   desc 'build telldus'
   task :telldus do
-    Dir.chdir('lib/telldus/ext') do
+    Dir.chdir('lib/rbtelldus/ext') do
       run "ruby extconf.rb"
       run "make"
     end

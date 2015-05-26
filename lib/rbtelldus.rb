@@ -1,1 +1,1 @@
-require 'telldus/rbtelldus.so'
+require 'rbtelldus/rbtelldus.so'
